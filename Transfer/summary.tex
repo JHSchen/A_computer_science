@@ -1,0 +1,191 @@
+\documentclass[UTF8,a4paper]{ctexart}
+\usepackage{geometry}
+\geometry{left=25mm,right=20mm,top=25mm,bottom=20mm} % 页面边距
+\usepackage{titlesec}       % 标题格式控制
+\usepackage{fancyhdr}       % 页眉页脚
+\usepackage{graphicx}       % 插入图片
+\usepackage{amsmath}        % 数学公式
+\usepackage{tabularx}       % 表格排版
+\usepackage{booktabs}       % 三线表格式
+\usepackage[backend=biber,style=gb7714-2015]{biblatex} % 参考文献
+\usepackage{zhnumber}       % 中文编号
+\usepackage{hyperref}       % 超链接
+\usepackage{xcolor}         % 颜色支持
+\usepackage{setspace}       % 行距控制
+\usepackage{etoolbox}       % 条件判断
+\usepackage{multirow}       % 表格合并
+\usepackage[perpage]{footmisc} % 脚注每页重置
+
+% ---------- 全局格式设置 ----------
+\linespread{1.5}            % 1.5倍行距
+\setmainfont{Times New Roman}
+\setCJKmainfont{SimSun}     % 正文宋体
+\setCJKsansfont{SimHei}     % 黑体
+\setCJKmonofont{KaiTi}      % 楷体
+
+% ---------- 页眉页脚设置 ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\footnotesize 武汉大学本科毕业论文（设计）} % 页眉
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+
+% ---------- 封面定义 ----------
+\newcommand{\makecover}{
+    \thispagestyle{empty}
+    \begin{center}
+        \vspace*{2cm}
+        {\kaishu\fontsize{36}{54}\selectfont 本科毕业论文（设计）} \\[2cm]
+        {\kaishu\fontsize{26}{39}\selectfont 基于深度学习的图像分类算法研究} \\[3cm]
+        {\songti\fontsize{14}{21}\selectfont
+            \begin{tabular}{ll}
+                姓名： & 张某某 \\
+                学号： & 2020******** \\
+                专业： & 哲学 \\
+                学院： & 哲学学院 \\
+                指导教师： & 李某某 \\
+            \end{tabular}
+        } \\[2cm]
+        {\songti\fontsize{14}{21}\selectfont 二〇二四年六月}
+    \end{center}
+    \clearpage
+}
+
+% ---------- 声明页定义 ----------
+\newcommand{\makestatement}{
+    \thispagestyle{empty}
+    \section*{\centering\heiti\fontsize{18}{27}\selectfont 原创性声明}
+    \addcontentsline{toc}{section}{原创性声明}
+    \vspace{1cm}
+    {\songti\fontsize{12}{18}\selectfont
+        本人郑重声明：所呈交的论文（设计），是本人在指导教师的指导下...（内容略）
+        
+        \vspace{2cm}
+        \noindent
+        \begin{tabular}{ll}
+            作者签名： & \underline{\hspace{4cm}} \\
+            日期： & \underline{\hspace{4cm}} \\
+            指导教师签名： & \underline{\hspace{4cm}} \\
+            日期： & \underline{\hspace{4cm}} \\
+        \end{tabular}
+    }
+    \clearpage
+    
+    \section*{\centering\heiti\fontsize{18}{27}\selectfont 版权使用授权书}
+    \addcontentsline{toc}{section}{版权使用授权书}
+    {\songti\fontsize{12}{18}\selectfont
+        本人完全了解武汉大学有权保留...（内容略）
+        
+        \vspace{2cm}
+        \noindent
+        \begin{tabular}{ll}
+            作者签名： & \underline{\hspace{4cm}} \\
+            日期： & \underline{\hspace{4cm}} \\
+            指导教师签名： & \underline{\hspace{4cm}} \\
+            日期： & \underline{\hspace{4cm}} \\
+        \end{tabular}
+    }
+    \clearpage
+}
+
+% ---------- 摘要环境定义 ----------
+\newenvironment{cnabstract}[2]{
+    \clearpage
+    \section*{\centering\heiti\fontsize{18}{27}\selectfont 摘要}
+    \addcontentsline{toc}{section}{摘要}
+    {\songti\fontsize{12}{18}\selectfont #1}
+    \vspace{1em}
+    \noindent{\heiti\fontsize{12}{18}\selectfont 关键词：} #2
+    \clearpage
+}
+
+\newenvironment{enabstract}[2]{
+    \clearpage
+    \section*{\centering\heiti\fontsize{18}{27}\selectfont ABSTRACT}
+    \addcontentsline{toc}{section}{ABSTRACT}
+    {\rmfamily\fontsize{12}{18}\selectfont #1}
+    \vspace{1em}
+    \noindent{\bfseries Keywords: } #2
+    \clearpage
+}
+
+% ---------- 章节格式设置 ----------
+\titleformat{\section}{\centering\heiti\fontsize{18}{27}\selectfont}{}{0em}{}
+\titleformat{\subsection}{\heiti\fontsize{14}{21}\selectfont}{}{0em}{}
+\titleformat{\subsubsection}{\heiti\fontsize{12}{18}\selectfont}{}{0em}{}
+
+% ---------- 图表公式设置 ----------
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\captionsetup[figure]{font=small,labelsep=quad,nameformat=simple}
+\captionsetup[table]{font=small,labelsep=quad,nameformat=simple}
+\newcommand{\formula}[1]{\begin{equation}#1\end{equation}}
+
+% ---------- 主文档内容 ----------
+\begin{document}
+
+% ---------- 前置部分 ----------
+\makecover                  % 封面
+\makestatement              % 声明
+\pagenumbering{Roman}       % 罗马数字页码
+
+% 中英文摘要
+\begin{cnabstract}{
+    本文针对图像分类任务，提出了一种基于改进ResNet的深度学习模型...
+}{
+    深度学习；图像分类；残差网络；数据增强
+}
+
+\begin{enabstract}{
+    This paper proposes an improved ResNet-based deep learning model...
+}{
+    deep learning; image classification; ResNet; data augmentation
+}
+
+% 目录
+\tableofcontents
+\clearpage
+
+% ---------- 主体部分 ----------
+\pagenumbering{arabic}      % 阿拉伯数字页码
+
+\section{绪论}
+\subsection{研究背景}
+深度学习在计算机视觉领域取得了显著进展...
+
+% 正文内容（示例）
+\section{实验与结果}
+\begin{table}[htbp]
+    \centering
+    \caption{模型性能对比（单位：\%）}
+    \begin{tabular}{ccc}
+        \toprule
+        模型 & 准确率 & 参数量 \\
+        \midrule
+        ResNet-50 & 95.2 & 25M \\
+        改进模型 & 96.8 & 28M \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\formula{
+    f = (1 - \Delta Y) \times [a_{00} \times (1 - \Delta X) + a_{01} \times \Delta X] + \Delta Y \times [a_{10} \times (1 - \Delta X) + a_{11} \times \Delta X]
+}
+
+% ---------- 结尾部分 ----------
+\section{结论}
+本文提出的改进模型在ImageNet数据集上表现优异...
+
+% 参考文献
+\printbibliography[title={\centering\heiti\fontsize{18}{27}\selectfont 参考文献}]
+
+% 致谢
+\section*{\centering\heiti\fontsize{18}{27}\selectfont 致谢}
+{\songti\fontsize{12}{18}\selectfont 感谢导师李四教授的悉心指导...}
+
+% 附录
+\appendix
+\section*{\centering\heiti\fontsize{18}{27}\selectfont 附录}
+{\songti\fontsize{12}{18}\selectfont 详细实验数据见下表...}
+
+\end{document}
