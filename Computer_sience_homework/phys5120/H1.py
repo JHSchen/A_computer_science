@@ -1,4 +1,4 @@
-#python3.13.2
+#python3.10
 
 # Import necessary libraries
 import numpy as np
